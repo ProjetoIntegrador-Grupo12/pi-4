@@ -20,13 +20,13 @@ class ConnectionInvalidException extends BaseException {
         );
 }
 
-/// Classe [ServerErrorException] é uma exceção indica que algo deu
+/// Classe [ErrorException] é uma exceção indica que algo deu
 /// errado no servidor, mas o servidor não pode especificar a
 /// natureza exata do problema
-class ServerErrorException extends BaseException {
-  ServerErrorException()
+class ErrorException extends BaseException {
+  ErrorException()
       : super(
           statusCode: 500,
-          message: 'Desculpe, ocorreu um erro interno no servidor.',
+          message: 'Desculpe, ocorreu um erro interno.',
         );
 }

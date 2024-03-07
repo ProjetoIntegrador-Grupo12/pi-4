@@ -18,8 +18,7 @@ class ConnectionInvalidFailure extends Failure {
   const ConnectionInvalidFailure({required super.message});
 }
 
-/// Classe [ServerErrorFailure] referente as exceções relacionadas ao
-/// Servidor.
-class ServerErrorFailure extends Failure {
-  const ServerErrorFailure({required super.message});
+/// Classe [ErrorFailure] referente as exceções genéricas relacionadas;
+class ErrorFailure extends Failure {
+  const ErrorFailure({required super.message});
 }
