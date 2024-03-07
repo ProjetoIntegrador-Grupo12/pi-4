@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "61038930802",
+    "project_id": "projeto-integrador-todo",
+    "storage_bucket": "projeto-integrador-todo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61038930802:android:0de4bc901cdb3c7c734beb",
+        "android_client_info": {
+          "package_name": "com.example.todo_senac"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe8VvBKNESEtRJbGybNW3XOUFrg1aKCYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
