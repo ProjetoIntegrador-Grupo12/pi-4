@@ -1,9 +1,14 @@
-// part of 'todo_bloc.dart';
+part of 'todo_bloc.dart';
 
-// abstract class TodoState extends Equatable {
-//   const TodoState();  
+enum TodoStatus {
+  initial,
+  loading,
+  loaded,
+  created,
+  finished,
+  error,
+}
 
-//   @override
-//   List<Object> get props => [];
-// }
-// class TodoInitial extends TodoState {}
+class TodoState extends Equatable {
+  
+}
