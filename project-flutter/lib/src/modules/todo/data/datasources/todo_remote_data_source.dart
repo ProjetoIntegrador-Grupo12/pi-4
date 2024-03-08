@@ -8,6 +8,7 @@ import 'package:todo_senac/src/modules/todo/data/models/todo_model.dart';
 abstract class TodoRemoteDataSource {
   Future<Unit> insert(TodoModel model);
   Future<Unit> delete(String id);
+  Future<Unit> deleteAll();
   Future<Unit> update(TodoModel model);
   Future<List<TodoModel>> getAll();
 }
@@ -77,6 +78,21 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
       }
 
       await firebaseClient.put(model.id!, model.toJson());
+
+      return Future.value(unit);
+    } on BaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Unit> deleteAll() async {
+    try {
+      if (!await networkInfo.isConnected) {
+        throw ConnectionInvalidException(message: 'Sem conexão');
+      }
+
+      await firebaseClient.deleteAll();
 
       return Future.value(unit);
     } on BaseException {

@@ -21,10 +21,10 @@ class TodoModel extends Todo {
         isFinished: model.isFinished,
       );
 
-  Todo toEntity() => Todo(
-        id: id,
-        text: text,
-        isFinished: isFinished,
+  factory TodoModel.toEntity(Todo entity) => TodoModel(
+        id: entity.id,
+        text: entity.text,
+        isFinished: entity.isFinished,
       );
 
   factory TodoModel.fromMap(Map<String, dynamic> map) {

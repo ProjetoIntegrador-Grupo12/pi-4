@@ -11,4 +11,6 @@ abstract class FirebaseClient {
   );
 
   Future<void> delete(String id);
+  
+  Future<void> deleteAll();
 }

@@ -6,6 +6,7 @@ import 'package:todo_senac/src/modules/todo/domain/usecases/get_all_todo_use_cas
 abstract class TodoRepository {
   Future<Either<Failure, Unit>> create(Todo entity);
   Future<Either<Failure, Unit>> delete(String id);
+  Future<Either<Failure, Unit>> deleteAll(NoParams params);
   Future<Either<Failure, Unit>> update(Todo entity);
   Future<Either<Failure, List<Todo>>> getAll(NoParams params);
 }

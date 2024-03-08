@@ -61,4 +61,20 @@ class FirebaseAdapter implements FirebaseClient {
       throw ErrorException();
     }
   }
+
+  @override
+  Future<void> deleteAll() async {
+    try {
+      CollectionReference query =
+          FirebaseFirestore.instance.collection('minhaColecao');
+
+      final snapshot = await query.get();
+
+      for (var doc in snapshot.docs) {
+        await query.doc(doc.id).delete();
+      }
+    } on BaseException {
+      throw ErrorException();
+    }
+  }
 }
