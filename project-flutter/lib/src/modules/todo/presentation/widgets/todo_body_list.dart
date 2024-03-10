@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_senac/src/modules/todo/presentation/bloc/todo_bloc.dart';
+import 'package:todo_senac/src/widgets/dialogs/dialogs.dart';
 
 class TodoBodyList extends StatefulWidget {
   const TodoBodyList({super.key});
@@ -14,10 +15,21 @@ class _TodoBodyListState extends State<TodoBodyList> {
   Widget build(BuildContext context) {
     return BlocConsumer<TodoBloc, TodoState>(
       listener: (context, state) {
-        if (state.status == TodoStatus.updated ||
-            state.status == TodoStatus.created ||
-            state.status == TodoStatus.deleted) {
-          return context.read<TodoBloc>().add(const LoadTodosEvent());
+        if (state.status == TodoStatus.updated) {
+          Dialogs.showCustomSnackBar(context, state.message!, Colors.green);
+          context.read<TodoBloc>().add(const LoadTodosEvent());
+        }
+
+        if (state.status == TodoStatus.created) {
+          context.read<TodoBloc>().add(const LoadTodosEvent());
+        }
+
+        if (state.status == TodoStatus.deleted) {
+          Dialogs.showCustomSnackBar(context, state.message!, Colors.green);
+          context.read<TodoBloc>().add(const LoadTodosEvent());
+        }
+        if (state.status == TodoStatus.error) {
+          Dialogs.showCustomSnackBar(context, state.message!, Colors.red);
         }
       },
       builder: (context, state) {
@@ -26,6 +38,8 @@ class _TodoBodyListState extends State<TodoBodyList> {
             child: CircularProgressIndicator(),
           );
         }
+
+        
 
         return ListView.builder(
             itemCount: state.listOfTodos.length,

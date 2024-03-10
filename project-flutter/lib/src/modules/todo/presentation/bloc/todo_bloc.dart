@@ -38,6 +38,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     CreateTodoEvent event,
     Emitter<TodoState> emit,
   ) async {
+    emit(state.copyWith(status: TodoStatus.loading));
+
     try {
       final result = await createTodoUseCase.call(event.todo);
 

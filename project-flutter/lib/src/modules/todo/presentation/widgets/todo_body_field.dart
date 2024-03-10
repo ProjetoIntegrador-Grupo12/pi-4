@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_senac/src/core/di/dependency_assembly.dart' as di;
@@ -20,12 +18,14 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
   late final GlobalKey<FormState> _formKey;
   late final TextEditingController _controller;
   late final TodoBloc bloc;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _controller = TextEditingController();
+    _focusNode = FocusNode();
     bloc = di.dependencyAssembly<TodoBloc>();
   }
 
@@ -47,11 +47,28 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      onFieldSubmitted: (value) {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<TodoBloc>().add(
+                                CreateTodoEvent(
+                                  todo: Todo(
+                                    id: null,
+                                    text: _controller.text,
+                                    isFinished: false,
+                                  ),
+                                ),
+                              );
+
+                          _controller.text = '';
+                        }
+                      },
+                      onTapOutside: (event) => _focusNode.unfocus(),
+                      focusNode: _focusNode,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _controller,
                       cursorColor: Colors.orange,
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null && value!.isEmpty) {
                           return 'Informe uma tarefa';
                         }
                         return null;
@@ -110,7 +127,6 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                               borderRadius: BorderRadius.circular(15))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-
                           context.read<TodoBloc>().add(
                                 CreateTodoEvent(
                                   todo: Todo(
@@ -120,6 +136,8 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                                   ),
                                 ),
                               );
+
+                          _controller.text = '';
                         }
                       },
                       iconSize: 45,
