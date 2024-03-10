@@ -12,47 +12,50 @@ class TodoBodyCount extends StatelessWidget {
       builder: (context, state) {
         final count = state.listOfTodos.length;
 
-        return Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Você possui $count tarefas pendentes',
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
+        return Visibility(
+          visible: state.status == TodoStatus.loaded,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Você possui $count tarefas pendentes',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 45,
-              child: TextButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+              SizedBox(
+                height: 45,
+                child: TextButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    count > 0
+                        ? Dialogs.showDeleteTodosConfirma(context, action: () {
+                            context
+                                .read<TodoBloc>()
+                                .add(const DeleteAllTodosEvent());
+                          })
+                        : null;
+                  },
+                  child: const Text(
+                    'Limpar tudo',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 12, 66, 110),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                onPressed: () {
-                  count > 0
-                      ? Dialogs.showDeleteTodosConfirma(context, action: () {
-                          context
-                              .read<TodoBloc>()
-                              .add(const DeleteAllTodosEvent());
-                        })
-                      : null;
-                },
-                child: const Text(
-                  'Limpar tudo',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 12, 66, 110),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         );
       },
     );

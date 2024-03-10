@@ -23,11 +23,11 @@ class _AppState extends State<App> {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           checkboxTheme: CheckboxThemeData(
-
             checkColor: MaterialStateProperty.all(Colors.white),
             fillColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
@@ -39,7 +39,6 @@ class _AppState extends State<App> {
             // Estiliza a borda do checkbox
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
-              
             ),
           ),
         ),
