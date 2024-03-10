@@ -3,7 +3,7 @@ abstract class FirebaseClient {
     String body,
   );
 
-  Future<Map<String, dynamic>> getAll();
+  Future <List<Map<String, dynamic>>> getAll();
 
   Future<void> put(
     String id,

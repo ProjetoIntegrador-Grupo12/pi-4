@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo_senac/src/core/adapter/firebase_client.dart';
@@ -22,17 +23,24 @@ class FirebaseAdapter implements FirebaseClient {
   }
 
   @override
-  Future<Map<String, dynamic>> getAll() async {
-    Map<String, dynamic> documentsData = {};
+  Future<List<Map<String, dynamic>>> getAll() async {
+    List<Map<String, dynamic>> documentsData = [];
 
     try {
-      final query = await firebaseFirestore.collection('Tasks').get();
+      QuerySnapshot<Map<String, dynamic>> task =
+          await FirebaseFirestore.instance.collection('Tasks').get();
 
-      for (var element in query.docs) {
-        documentsData.addAll(element.data());
+      for (var element in task.docs) {
+        var item = element.data();
+
+        item['id'] = element.id;
+        documentsData.add(
+          item,
+        );
       }
 
       return documentsData;
+
     } on BaseException {
       throw ErrorException();
     }
@@ -41,10 +49,19 @@ class FirebaseAdapter implements FirebaseClient {
   @override
   Future<void> post(String body) async {
     try {
-      CollectionReference query =
-          FirebaseFirestore.instance.collection('Tasks');
+      // CollectionReference query =
+      //     FirebaseFirestore.instance.collection('Tasks');
 
-      await query.add(json.decode(body) as Map<String, String>);
+      // await query.add(json.decode(body) as Map<String, String>);
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+
+      return users.add({
+        'name': "Flavio",
+        'email': 'flavio@gmai.,com',
+        'age': 25,
+      }).then((value) => log("User added successfully!"));
     } on BaseException {
       throw ErrorException();
     }

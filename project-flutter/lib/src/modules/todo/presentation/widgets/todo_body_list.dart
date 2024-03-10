@@ -41,7 +41,7 @@ class _TodoBodyListState extends State<TodoBodyList> {
                 ),
                 child: Container(
                   height: 80,
-                  // margin: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.only(left: 20),
                   alignment: AlignmentDirectional.center,
                   width: double.infinity,
@@ -67,15 +67,19 @@ class _TodoBodyListState extends State<TodoBodyList> {
                       Expanded(
                         flex: 6,
                         child: CheckboxListTile(
-                          onChanged: (_) => context.read<TodoBloc>().add(FinishedTodoEvent(todo: item)),
+                          onChanged: (_) => context
+                              .read<TodoBloc>()
+                              .add(FinishedTodoEvent(todo: item)),
                           value: item.isFinished,
                           title: Text(
                             item.text,
                             style: TextStyle(
-                              decoration:
-                                  item.isFinished ? TextDecoration.lineThrough : null,
+                              decoration: item.isFinished
+                                  ? TextDecoration.lineThrough
+                                  : null,
                               fontSize: 20,
-                              color: item.isFinished ? Colors.grey : Colors.white,
+                              color:
+                                  item.isFinished ? Colors.grey : Colors.white,
                             ),
                           ),
                         ),

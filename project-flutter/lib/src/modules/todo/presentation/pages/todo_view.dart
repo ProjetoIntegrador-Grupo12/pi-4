@@ -8,7 +8,6 @@ class TodoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // extendBodyBehindAppBar: false,
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: TodoAppBar(),

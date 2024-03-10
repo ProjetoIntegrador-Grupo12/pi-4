@@ -50,6 +50,7 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
           .map<TodoModel>(
               (todo) => TodoModel.fromMap(todo as Map<String, dynamic>))
           .toList();
+          
     } on BaseException {
       rethrow;
     }
