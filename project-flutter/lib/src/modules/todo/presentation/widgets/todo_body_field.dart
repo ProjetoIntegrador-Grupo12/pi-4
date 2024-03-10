@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_senac/src/core/di/dependency_assembly.dart' as di;
+import 'package:todo_senac/src/modules/todo/domain/entities/todo.dart';
 import 'package:todo_senac/src/modules/todo/presentation/bloc/todo_bloc.dart';
 
 class TodoBodyField extends StatefulWidget {
@@ -45,9 +48,10 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                   Expanded(
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: _controller,
                       cursorColor: Colors.orange,
                       validator: (value) {
-                        if (value == null) {
+                        if (value!.isEmpty) {
                           return 'Informe uma tarefa';
                         }
                         return null;
@@ -88,7 +92,9 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                               ),
                             ),
                           ),
-                          errorStyle: TextStyle(color: Colors.red)),
+                          errorStyle: TextStyle(
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold)),
                     ),
                   ),
                   const SizedBox(
@@ -103,7 +109,18 @@ class _TodoBodyFieldState extends State<TodoBodyField> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15))),
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+
+                          context.read<TodoBloc>().add(
+                                CreateTodoEvent(
+                                  todo: Todo(
+                                    id: null,
+                                    text: _controller.text,
+                                    isFinished: false,
+                                  ),
+                                ),
+                              );
+                        }
                       },
                       iconSize: 45,
                       icon: const Icon(

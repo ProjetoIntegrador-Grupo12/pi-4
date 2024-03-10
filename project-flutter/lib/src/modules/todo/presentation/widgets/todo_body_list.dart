@@ -12,8 +12,21 @@ class TodoBodyList extends StatefulWidget {
 class _TodoBodyListState extends State<TodoBodyList> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TodoBloc, TodoState>(
+    return BlocConsumer<TodoBloc, TodoState>(
+      listener: (context, state) {
+        if (state.status == TodoStatus.updated ||
+            state.status == TodoStatus.created ||
+            state.status == TodoStatus.deleted) {
+          return context.read<TodoBloc>().add(const LoadTodosEvent());
+        }
+      },
       builder: (context, state) {
+        if (state.status == TodoStatus.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         return ListView.builder(
             itemCount: state.listOfTodos.length,
             itemBuilder: (context, index) {
@@ -22,6 +35,8 @@ class _TodoBodyListState extends State<TodoBodyList> {
               return Dismissible(
                 key: Key(item.text),
                 direction: DismissDirection.endToStart,
+                onDismissed: (direction) =>
+                    context.read<TodoBloc>().add(DeleteTodoEvent(id: item.id!)),
                 background: Container(
                   height: 80,
                   color: Colors.red,
@@ -39,52 +54,57 @@ class _TodoBodyListState extends State<TodoBodyList> {
                     ],
                   ),
                 ),
-                child: Container(
-                  height: 80,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.only(left: 20),
-                  alignment: AlignmentDirectional.center,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 155, 153, 174)
-                          .withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(22)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: item.isFinished ? Colors.green : Colors.red,
-                            shape: BoxShape.circle),
-                        child: Icon(
-                          item.isFinished ? Icons.done : Icons.error,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: CheckboxListTile(
-                          onChanged: (_) => context
-                              .read<TodoBloc>()
-                              .add(FinishedTodoEvent(todo: item)),
-                          value: item.isFinished,
-                          title: Text(
-                            item.text,
-                            style: TextStyle(
-                              decoration: item.isFinished
-                                  ? TextDecoration.lineThrough
-                                  : null,
-                              fontSize: 20,
+                child: GestureDetector(
+                  onTap: () => context
+                      .read<TodoBloc>()
+                      .add(UpdateTodoEvent(todo: item, isFinished: true)),
+                  child: Container(
+                    height: 80,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(left: 20),
+                    alignment: AlignmentDirectional.center,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 155, 153, 174)
+                            .withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(22)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
                               color:
-                                  item.isFinished ? Colors.grey : Colors.white,
+                                  item.isFinished ? Colors.green : Colors.red,
+                              shape: BoxShape.circle),
+                          child: Icon(
+                            item.isFinished ? Icons.done : Icons.error,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: CheckboxListTile(
+                            onChanged: null,
+                            value: item.isFinished,
+                            title: Text(
+                              item.text,
+                              style: TextStyle(
+                                  decoration: item.isFinished
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                  fontSize: 20,
+                                  color: item.isFinished
+                                      ? Colors.grey
+                                      : Colors.white,
+                                  overflow: TextOverflow.ellipsis),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

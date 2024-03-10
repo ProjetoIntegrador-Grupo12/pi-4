@@ -37,7 +37,6 @@ class TodoModel extends Todo {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'text': text,
       'isFinished': isFinished,
     };

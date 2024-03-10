@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_senac/src/modules/todo/presentation/widgets/todo_body_count.dart';
 import 'package:todo_senac/src/modules/todo/presentation/widgets/todo_body_field.dart';
 import 'package:todo_senac/src/modules/todo/presentation/widgets/todo_body_list.dart';
 
@@ -23,53 +24,23 @@ class _TodoBodyState extends State<TodoBody> {
           topRight: Radius.circular(70),
         ),
       ),
-      child: Flex(
+      child: const Flex(
         direction: Axis.vertical,
         children: [
-          const Expanded(
+          Expanded(
             flex: 2,
             child: TodoBodyField(),
           ),
-          const Expanded(
+          Expanded(
             flex: 11,
-            child: TodoBodyList(),
+            child: Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: TodoBodyList(),
+            ),
           ),
           Expanded(
             flex: 2,
-            child: Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    'Você possui 5 tarefas pendentes',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                  ),
-                ),
-                SizedBox(
-                  height: 45,
-                  child: TextButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Limpar tudo',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 12, 66, 110),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+            child: TodoBodyCount(),
           )
         ],
       ),

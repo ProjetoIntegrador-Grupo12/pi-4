@@ -40,7 +40,6 @@ class FirebaseAdapter implements FirebaseClient {
       }
 
       return documentsData;
-
     } on BaseException {
       throw ErrorException();
     }
@@ -49,19 +48,14 @@ class FirebaseAdapter implements FirebaseClient {
   @override
   Future<void> post(String body) async {
     try {
-      // CollectionReference query =
-      //     FirebaseFirestore.instance.collection('Tasks');
+      CollectionReference query =
+          FirebaseFirestore.instance.collection('Tasks');
 
-      // await query.add(json.decode(body) as Map<String, String>);
+      await query.add(json.decode(body) as Map<String, dynamic>);
 
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('users');
+      
 
-      return users.add({
-        'name': "Flavio",
-        'email': 'flavio@gmai.,com',
-        'age': 25,
-      }).then((value) => log("User added successfully!"));
+      
     } on BaseException {
       throw ErrorException();
     }
@@ -73,8 +67,8 @@ class FirebaseAdapter implements FirebaseClient {
       CollectionReference query =
           FirebaseFirestore.instance.collection('Tasks');
 
-      await query.doc(id).update(json.decode(body) as Map<String, String>);
-    } on BaseException {
+      await query.doc(id).update(json.decode(body) as Map<String, dynamic>);
+    } catch (error) {
       throw ErrorException();
     }
   }
@@ -83,7 +77,7 @@ class FirebaseAdapter implements FirebaseClient {
   Future<void> deleteAll() async {
     try {
       CollectionReference query =
-          FirebaseFirestore.instance.collection('minhaColecao');
+          FirebaseFirestore.instance.collection('Tasks');
 
       final snapshot = await query.get();
 

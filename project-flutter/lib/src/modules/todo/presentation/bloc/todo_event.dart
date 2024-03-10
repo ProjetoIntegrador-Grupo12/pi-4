@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'todo_bloc.dart';
 
 abstract class TodoEvent extends Equatable {
@@ -40,24 +41,13 @@ class DeleteAllTodosEvent extends TodoEvent {
   List<Object?> get props => [];
 }
 
-class FinishedTodoEvent extends TodoEvent {
-  final Todo todo;
-
-  const FinishedTodoEvent({
-    required this.todo,
-  });
-
-  @override
-  List<Object?> get props => [
-        todo,
-      ];
-}
-
 class UpdateTodoEvent extends TodoEvent {
   final Todo todo;
+  final bool isFinished;
 
   const UpdateTodoEvent({
     required this.todo,
+    this.isFinished = false,
   });
 
   @override

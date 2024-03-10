@@ -70,7 +70,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Emitter<TodoState> emit,
   ) async {
     try {
-      final result = await updateTodoUseCase.call(event.todo);
+      Todo todo = Todo(
+          id: event.todo.id,
+          text: event.todo.text,
+          isFinished: event.isFinished
+              ? !event.todo.isFinished
+              : event.todo.isFinished);
+
+      final result = await updateTodoUseCase.call(todo);
 
       result.fold(
         (failure) => emit(
