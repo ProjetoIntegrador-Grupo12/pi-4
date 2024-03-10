@@ -26,6 +26,22 @@ class _AppState extends State<App> {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          checkboxTheme: CheckboxThemeData(
+
+            checkColor: MaterialStateProperty.all(Colors.white),
+            fillColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return Colors.green; // Cor quando selecionado
+              }
+              return Colors.white; // Cor padrão
+            }),
+            // Estiliza a borda do checkbox
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+              
+            ),
+          ),
         ),
         home: const TodoView(),
       ),

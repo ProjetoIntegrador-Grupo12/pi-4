@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_senac/src/core/di/dependency_assembly.dart' as di;
+import 'package:todo_senac/src/modules/todo/presentation/bloc/todo_bloc.dart';
 
 class TodoBodyField extends StatefulWidget {
   const TodoBodyField({
@@ -12,37 +15,107 @@ class TodoBodyField extends StatefulWidget {
 
 class _TodoBodyFieldState extends State<TodoBodyField> {
   late final GlobalKey<FormState> _formKey;
+  late final TextEditingController _controller;
+  late final TodoBloc bloc;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
+    _controller = TextEditingController();
+    bloc = di.dependencyAssembly<TodoBloc>();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Row(
-          children: [
-            Expanded(
-              // Wrap TextFormField in Expanded to ensure it takes available space
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText:
-                      'Digite algo', // Optional: Adds a label to the TextFormField
-                  border:
-                      OutlineInputBorder(), // Optional: Adds a border to the TextFormField
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                // Your onPressed logic here
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ));
+    return BlocBuilder<TodoBloc, TodoState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Form(
+              key: _formKey,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      cursorColor: Colors.orange,
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Informe uma tarefa';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                            gapPadding: 25,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            ),
+                            gapPadding: 25,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: Colors.grey),
+                          hintText: 'Digite sua tarefa',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                15,
+                              ),
+                            ),
+                          ),
+                          errorStyle: TextStyle(color: Colors.red)),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 70,
+                    height: 70,
+                    child: IconButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15))),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {}
+                      },
+                      iconSize: 45,
+                      icon: const Icon(
+                        Icons.add,
+                        color: Color.fromARGB(255, 12, 66, 110),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        );
+      },
+    );
   }
 }
