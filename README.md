@@ -6,6 +6,9 @@
 
 <!-- INSERIR O VÍDEO AQUI!! -->
 
+## 🖌️ Protótipo
+
+- https://www.figma.com/file/3auh7KTYoEk5SImvyosCgu/projeto_integrador?type=design&node-id=413%3A235&mode=design&t=oJ67FURFMWUn6qEq-1
 ## 🎖️ Tecnologias
 - **Figma:** _Criação de protótipo de telas e interação do usuário;_
 
