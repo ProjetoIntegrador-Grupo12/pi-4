@@ -4,11 +4,7 @@
 ## 📱 Demonstração
 <br>
 
-<div align=center>
-    <video height="400"  controls>
-        <source src="assets/demo.mp4" type="video/mp4">
-    </video>
-</div>
+<iframe width="560" height="315" src="https://youtube.com/shorts/CvPuoxa_Kx4?feature=share" title="Título do Vídeo"></iframe>
 
 ## 🎖️ Tecnologias
 - **Figma:** _Criação de protótipo de telas e interação do usuário;_
