@@ -3,7 +3,7 @@
 
 ## 📱 Demonstração
 
-<iframe width="560" height="315" src="demo\demo.mp4" title="Título do Vídeo" ></iframe>
+<iframe width="560" height="315" src="https://github.com/ProjetoIntegrador-Grupo12/pi-4/blob/main/Video%20-%20demo/demo.mp4" title="Demonstração" ></iframe>
 
 ## 🎖️ Tecnologias
 - **Figma:** _Criação de protótipo de telas e interação do usuário;_
