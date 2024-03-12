@@ -18,10 +18,10 @@ https://github.com/ProjetoIntegrador-Grupo12/pi-4/assets/144742247/e87ceed0-5bd0
 
 ## 📌 Integrantes
 
-- <i>Bruna Maciel Meroni</i>
-- <i>Calyto Nichel Santos do Nascimento</i>
-- <i>Flavio George da Silva Romeiro</i>
-- <i>Joao Vitor Monteiro de Oliveira</i>
-- <i>Matheus Jardim Coda</i>
-- <i>Pablo Ferreira Nascimento</i>
-- <i>Sofia Ramlow Lehmkuhl</i>
+- <i>Bruna Maciel Meroni (brunammeroni)</i>
+- <i>Calyto Nichel Santos do Nascimento (calyto)</i>
+- <i>Flavio George da Silva Romeiro (flaviogsromeiro)</i>
+- <i>Joao Vitor Monteiro de Oliveira (joao-vmoliveira26)</i>
+- <i>Matheus Jardim Coda (mathcoda)</i>
+- <i>Pablo Ferreira Nascimento (Pablo-Nasciimento)</i>
+- <i>Sofia Ramlow Lehmkuhl (softrl)</i>
